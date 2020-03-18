@@ -54,8 +54,17 @@ class Required extends BaseKeyword
 
         foreach ($required as $reqProperty) {
             $propertyFound = false;
-            foreach ($data as $property => $value) {
-                $propertyFound = $propertyFound || ($reqProperty === $property);
+
+            if (is_array($data)) {
+                foreach ($data as $innerDate) {
+                    foreach ($innerDate as $property => $value) {
+                        $propertyFound = $propertyFound || ($reqProperty === $property);
+                    }
+                }
+            } else {
+                foreach ($data as $property => $value) {
+                    $propertyFound = $propertyFound || ($reqProperty === $property);
+                }
             }
 
             if (! $propertyFound) {
